@@ -1,13 +1,16 @@
 import PlaceholderPage from "../components/PlaceholderPage";
 import ProjectPageShell from "../components/ProjectPageShell";
+import { getFactions } from "../lib/api";
 
-function FactionsPage() {
+async function FactionsPage() {
+  const { factions } = await getFactions();
+
   return (
     <ProjectPageShell>
       <PlaceholderPage
-        description="왕실, 길드, 상단, 반란 세력처럼 세계의 권력 구조를 관리합니다."
-        items={["왕실", "마법사 길드", "기억 상단", "폐허 탐사단"]}
-        title="진영 & 세력"
+        description="지도 위에 표시할 세력의 중심 거점, 영향권, 관계와 대표 색상을 관리합니다."
+        items={factions.map((faction) => faction.name)}
+        title="진영"
       />
     </ProjectPageShell>
   );

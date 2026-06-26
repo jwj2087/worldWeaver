@@ -1,13 +1,22 @@
 import PlaceholderPage from "../components/PlaceholderPage";
 import ProjectPageShell from "../components/ProjectPageShell";
+import { getProjectMap } from "../lib/api";
 
-function MapPage() {
+async function MapPage() {
+  const { map } = await getProjectMap();
+  const items = [
+    map.title,
+    ...map.regions.map((region) => region.name),
+    ...map.routes.map((route) => route.name),
+    ...map.markers.map((marker) => marker.label),
+  ];
+
   return (
     <ProjectPageShell>
       <PlaceholderPage
-        description="지역, 도시, 이동 경로와 공간 관계를 정리합니다."
-        items={["아스라", "북부 시장", "기억 경매장", "남쪽 황야"]}
-        title="지역과 지도"
+        description={map.description ?? "텍스트로 생성된 지도 위에 지역, 캐릭터 위치, 진영 영향권과 이동 경로를 확인합니다."}
+        items={items}
+        title="지도"
       />
     </ProjectPageShell>
   );
